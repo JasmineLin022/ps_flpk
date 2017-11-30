@@ -11,45 +11,47 @@
 	Module.DEFAULTS = {
 		speed : 1000,
 		whenitcallback:function(w){
-			console.log(w);
+			console.log('whenitcallback');
+			
 		}
 	}
 
-	Module.prototype.assignPercent = function(z,options){
+	Module.prototype.assignPercent = function(z,whenitcallback){
 		console.log('assignPercent');
 		$('.result').width(z+'%');
-		// options(z);
+		whenitcallback(z);
+
 	};
 
-	Module.prototype.nextProgress = function(options){
+	Module.prototype.nextProgress = function(whenitcallback){
 		console.log('nextProgress');
 		
 		var result = parseInt(($('.result').width())*100/($('.ps_flpk').width()));
 		result = (100-result)*0.2+result;
-		options(result);
+		whenitcallback(result);
 		$('.result').width(result+'%');
 	};
 
-	Module.prototype.doneProgress = function(whenitcallback){
+	Module.prototype.doneProgress = function(option){
 		console.log('doneProgress');
 		var width = 100;
 		$('.result').width(width+'%');
-		whenitcallback(width);
+		this.option.whenitcallback(width);
+		option(width);
 		
-
 	};
 
-	Module.prototype.zeroProgress = function(options){
+	Module.prototype.zeroProgress = function(whenitcallback){
 		console.log('zeroProgress');
 		var width =0;
 		$('.result').width(0);
-		// options(width);
+		whenitcallback(width);
 	};
 
+	function option(w){
+		console.log(w);
+	};
 
-	// function options(e){
-	// 	console.log(e);
-	// }
 
 	$.fn[ModuleName] = function(methods,options,options2){
 		return this.each(function(i,e){
